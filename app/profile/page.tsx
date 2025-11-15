@@ -7,10 +7,12 @@ import { User, Mail, Edit, Plus, ExternalLink, Gamepad2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useStore } from '@/lib/store';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProfilePage() {
   const router = useRouter();
   const { user } = useStore();
+  const { t } = useLanguage();
   const [editing, setEditing] = useState(false);
   const [bio, setBio] = useState(user?.bio || '');
 
@@ -42,7 +44,7 @@ export default function ProfilePage() {
                     className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition flex items-center gap-2"
                   >
                     <Edit className="w-4 h-4" />
-                    تعديل
+                    {t('profile.edit')}
                   </button>
                 </div>
                 <div className="flex items-center gap-4 text-white/70 mb-4">
@@ -56,11 +58,11 @@ export default function ProfilePage() {
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                    placeholder="اكتب نبذة عنك..."
+                    placeholder={t('profile.bioPlaceholder')}
                     rows={4}
                   />
                 ) : (
-                  <p className="text-white/80">{bio || 'لا توجد نبذة شخصية'}</p>
+                  <p className="text-white/80">{bio || t('profile.noBio')}</p>
                 )}
               </div>
             </div>
@@ -69,25 +71,25 @@ export default function ProfilePage() {
           {/* Games Section */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">معرض الألعاب</h2>
+              <h2 className="text-2xl font-bold text-white">{t('profile.gamesGallery')}</h2>
               <Link
                 href="/games/new"
                 className="px-4 py-2 bg-[#14b8a6] text-white rounded-lg hover:bg-[#0d9488] transition flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
-                إضافة لعبة
+                {t('profile.addGame')}
               </Link>
             </div>
 
             {user.games.length === 0 ? (
               <div className="text-center py-12">
                 <Gamepad2 className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                <p className="text-white/70 mb-4">لا توجد ألعاب حتى الآن</p>
+                <p className="text-white/70 mb-4">{t('profile.noGames')}</p>
                 <Link
                   href="/games/new"
                   className="inline-block px-6 py-3 bg-[#14b8a6] text-white rounded-lg hover:bg-[#0d9488] transition"
                 >
-                  أضف لعبتك الأولى
+                  {t('profile.addFirstGame')}
                 </Link>
               </div>
             ) : (
@@ -130,15 +132,15 @@ export default function ProfilePage() {
 
           {/* Circles Section */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6">دوائري</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('profile.myCircles')}</h2>
             {user.circles.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-white/70 mb-4">لم تنضم إلى أي دائرة بعد</p>
+                <p className="text-white/70 mb-4">{t('profile.noCircles')}</p>
                 <Link
                   href="/circles/new"
                   className="inline-block px-6 py-3 bg-[#14b8a6] text-white rounded-lg hover:bg-[#0d9488] transition"
                 >
-                  إنشاء دائرة جديدة
+                  {t('profile.createNewCircle')}
                 </Link>
               </div>
             ) : (
@@ -149,8 +151,8 @@ export default function ProfilePage() {
                     href={`/circles/${circleId}`}
                     className="block bg-white/5 rounded-lg p-4 border border-white/10 hover:bg-white/10 transition"
                   >
-                    <h3 className="text-white font-semibold">دائرة #{circleId}</h3>
-                    <p className="text-white/70 text-sm mt-1">انقر للعرض</p>
+                    <h3 className="text-white font-semibold">{t('profile.circleNumber')}{circleId}</h3>
+                    <p className="text-white/70 text-sm mt-1">{t('profile.clickToView')}</p>
                   </Link>
                 ))}
               </div>

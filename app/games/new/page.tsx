@@ -7,10 +7,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useStore } from '@/lib/store';
 import { mockAPI } from '@/lib/mock-api';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function NewGamePage() {
   const router = useRouter();
   const { user, addGame } = useStore();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -45,7 +47,7 @@ export default function NewGamePage() {
       addGame(newGame);
       router.push('/profile');
     } catch (err) {
-      setError('حدث خطأ أثناء إضافة اللعبة');
+      setError(t('gamesNew.error'));
     } finally {
       setLoading(false);
     }
@@ -83,8 +85,8 @@ export default function NewGamePage() {
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-2">إضافة لعبة جديدة</h1>
-          <p className="text-white/70 mb-8">شارك لعبتك مع المجتمع</p>
+          <h1 className="text-4xl font-bold text-white mb-2">{t('gamesNew.title')}</h1>
+          <p className="text-white/70 mb-8">{t('gamesNew.subtitle')}</p>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             {error && (
@@ -95,48 +97,48 @@ export default function NewGamePage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-white/80 mb-2">اسم اللعبة</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.gameName')}</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                  placeholder="اسم اللعبة"
+                  placeholder={t('gamesNew.gameNamePlaceholder')}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">الوصف</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.description')}</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                  placeholder="وصف اللعبة..."
+                  placeholder={t('gamesNew.descriptionPlaceholder')}
                   rows={4}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">النوع</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.genre')}</label>
                 <select
                   value={formData.genre}
                   onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
                   required
                 >
-                  <option value="">اختر النوع</option>
-                  <option value="Platformer">منصات</option>
-                  <option value="Action">أكشن</option>
-                  <option value="RPG">ألعاب تقمص أدوار</option>
-                  <option value="Puzzle">ألغاز</option>
-                  <option value="Strategy">استراتيجية</option>
+                  <option value="">{t('gamesNew.selectGenre')}</option>
+                  <option value="Platformer">Platformer</option>
+                  <option value="Action">Action</option>
+                  <option value="RPG">RPG</option>
+                  <option value="Puzzle">Puzzle</option>
+                  <option value="Strategy">Strategy</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">المنصة</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.platform')}</label>
                 <div className="flex flex-wrap gap-2">
                   {['PC', 'Steam', 'Mobile', 'Epic'].map((p) => (
                     <button
@@ -156,14 +158,14 @@ export default function NewGamePage() {
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">الصور</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.images')}</label>
                 <div className="flex gap-2 mb-4">
                   <input
                     type="url"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                     className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                    placeholder="رابط الصورة"
+                    placeholder={t('gamesNew.imageUrlPlaceholder')}
                   />
                   <button
                     type="button"
@@ -194,7 +196,7 @@ export default function NewGamePage() {
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">روابط المتاجر</label>
+                <label className="block text-white/80 mb-2">{t('gamesNew.storeLinks')}</label>
                 <div className="space-y-3">
                   <input
                     type="url"
@@ -206,7 +208,7 @@ export default function NewGamePage() {
                       })
                     }
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                    placeholder="رابط Steam (اختياري)"
+                    placeholder={t('gamesNew.steamLink')}
                   />
                   <input
                     type="url"
@@ -218,7 +220,7 @@ export default function NewGamePage() {
                       })
                     }
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#14b8a6]"
-                    placeholder="رابط Itch.io (اختياري)"
+                    placeholder={t('gamesNew.itchLink')}
                   />
                 </div>
               </div>
@@ -228,7 +230,7 @@ export default function NewGamePage() {
                 disabled={loading}
                 className="w-full py-4 bg-[#14b8a6] text-white rounded-lg font-semibold hover:bg-[#0d9488] transition disabled:opacity-50"
               >
-                {loading ? 'جاري الإضافة...' : 'إضافة اللعبة'}
+                {loading ? t('gamesNew.adding') : t('gamesNew.addGame')}
               </button>
             </form>
           </div>

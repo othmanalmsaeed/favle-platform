@@ -9,7 +9,7 @@ import { useStore } from '@/lib/store';
 import { mockAPI } from '@/lib/mock-api';
 import { CampaignTask } from '@/lib/store';
 
-export default function NewCampaignPage() {
+export default function NewCampaignClient() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { user, circles, games, addCampaign } = useStore();

@@ -1,5 +1,6 @@
 'use client';
-
+import { Suspense } from "react";
+import NewCampaignClient from "./NewCampaignClient";
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Plus, Calendar, Target, X } from 'lucide-react';
@@ -104,7 +105,7 @@ export default function NewCampaignPage() {
   const userGames = games.filter((g) => g.developerId === user.id);
 
   return (
-    <div className="min-h-screen bg-[#0a1929]">
+    <Suspense fallback={<div className="min-h-screen bg-[#0a1929]">
       <Header />
       
       <div className="container mx-auto px-4 py-20">
@@ -262,7 +263,11 @@ export default function NewCampaignPage() {
       </div>
 
       <Footer />
-    </div>
+    </div>}>
+
+    
+    <NewCampaignClient />
+    </Suspense>
   );
 }
 
